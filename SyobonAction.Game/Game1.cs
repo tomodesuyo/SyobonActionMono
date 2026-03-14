@@ -746,6 +746,7 @@
                     this.main = 100;
                 }
 
+#if DEBUG
                 if (Keyboard.GetState().IsKeyDown(Keys.Q))
                 {
                     // mtype = 0;
@@ -763,6 +764,28 @@
                     }
                 }
 
+                if (Keyboard.GetState().IsKeyDown(Keys.P))
+                {
+                    this.mtype = 0;
+                    this.mhp = 1;
+                }
+
+                if (Keyboard.GetState().IsKeyDown(Keys.O))
+                {
+                    this.maintm++;
+                    this.maintm = 0;
+                    this.main = 1;
+                    this.zxon = 0;
+                    if (this.mhp >= 1)
+                        this.mhp = 0;
+                    if (this.stc >= 5)
+                    {
+                        this.stc = 0;
+                        this.stagepoint = 0;
+                    }
+                }
+#else
+
                 if (Keyboard.GetState().IsKeyDown(Keys.O))
                 {
                     if (this.mhp >= 1)
@@ -776,6 +799,7 @@
                         this.stagepoint = 0;
                     }
                 }
+#endif
 
                 if (this.mkeytm <= 0)
                 {
@@ -4278,7 +4302,7 @@
             this.spriteBatch.Begin();
             this.rpaint();
             this.spriteBatch.End();
-            
+
             // this.xx[0] = 30;
             this.TargetElapsedTime = TimeSpan.FromMilliseconds(1000.0 / 30);
             if (Keyboard.GetState().IsKeyDown(Keys.Space))
