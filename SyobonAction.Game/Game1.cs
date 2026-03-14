@@ -16,6 +16,10 @@
 
         protected const int fymax = 42000;
 
+        // 左スクロールしきい値
+        protected const int SCROLL_LEFT_PIXELS = 200;
+        protected const int SCROLL_LEFT = SCROLL_LEFT_PIXELS * 100;
+
         protected Texture2D blank;
 
         protected Dictionary<string, Texture2D> breakawayBlockTextures = new Dictionary<string, Texture2D>();
@@ -770,6 +774,17 @@
                     this.mhp = 1;
                 }
 
+
+                if (Keyboard.GetState().IsKeyDown(Keys.L))
+                {
+                    this.kscroll = 10;
+                }
+
+                if (Keyboard.GetState().IsKeyDown(Keys.K))
+                {
+                    this.kscroll = 0;
+                }
+
                 if (Keyboard.GetState().IsKeyDown(Keys.O))
                 {
                     this.maintm++;
@@ -1388,13 +1403,29 @@
                     }
                 }
 
+                // 地面判定初期化
                 this.mzimen = 0;
+
+
+
+                // 場外
                 if (this.mtype <= 9 && this.mhp >= 1)
                 {
-                    if (this.ma < 100)
+                    if (this.screenX == 0)
                     {
-                        this.ma = 100;
-                        this.mc = 0;
+                        if (this.ma < 100)
+                        {
+                            this.ma = 100;
+                            this.mc = 0;
+                        }
+                    }
+                    else
+                    {
+                        if (this.ma < 0)
+                        {
+                            this.ma = 0;
+                            this.mc = 0;
+                        }
                     }
 
                     if (this.ma + this.mnobia > fxmax)
@@ -4093,9 +4124,25 @@
 
                 if (this.kscroll != 1 && this.kscroll != 2)
                 {
+                    // this.xx[2] = this.mascrollmax;
+                    // this.xx[3] = 0;
+                    // this.xx[1] = this.xx[2];
+                    // if (this.ma > this.xx[1] && this.fzx < this.scrollx)
+                    // {
+                    //     this.xx[5] = this.ma - this.xx[1];
+                    //     this.ma = this.xx[1];
+                    //     this.screenX += this.xx[5];
+                    //     this.fzx += this.xx[5];
+                    //     if (this.xx[1] <= 5000)
+                    //     {
+                    //         this.xx[3] = 1;
+                    //     }
+                    // }
                     this.xx[2] = this.mascrollmax;
                     this.xx[3] = 0;
-                    this.xx[1] = this.xx[2];
+                    this.xx[1] = this.xx[2]; // 右端
+
+                    // 右スクロール
                     if (this.ma > this.xx[1] && this.fzx < this.scrollx)
                     {
                         this.xx[5] = this.ma - this.xx[1];
@@ -4103,8 +4150,19 @@
                         this.screenX += this.xx[5];
                         this.fzx += this.xx[5];
                         if (this.xx[1] <= 5000)
-                        {
                             this.xx[3] = 1;
+                    }
+
+                    // 左スクロール
+                    if (this.kscroll == 10)
+                    {
+
+                        if (this.ma < SCROLL_LEFT && this.fzx > 0)
+                        {
+                            int d = SCROLL_LEFT - this.ma;
+                            this.ma = SCROLL_LEFT;
+                            this.screenX -= d;
+                            this.fzx -= d;
                         }
                     }
                 }
