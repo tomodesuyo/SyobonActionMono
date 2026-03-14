@@ -199,12 +199,6 @@
 /processorParam:Quality=Best
 /build:SE/dokan.mp3
 
-#begin SE/gameoveéÆ.mp3
-/importer:Mp3Importer
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:SE/gameoveéÆ.mp3
-
 #begin SE/gameover.mp3
 /importer:Mp3Importer
 /processor:SoundEffectProcessor

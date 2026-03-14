@@ -93,10 +93,15 @@
                 this.grap[t][x1].setValues(33 * t, 0, 30, 30, x1);
                 this.grap[t + 30][x1].setValues(33 * t, 33, 30, 30, x1);
                 this.grap[t + 60][x1].setValues(33 * t, 66, 30, 30, x1);
+                this.grap[t + 90][x1].setValues(33 * t, 99, 30, 30, x1);
             }
 
             this.grap[8][x1].setValues(33 * 7, 0, 30, 30, x1);
             this.grap[16][x1].setValues(33 * 6, 0, 24, 27, 2);
+            this.grap[10][x1].setValues(33 * 9, 0, 30, 30,x1);
+            this.grap[40][x1].setValues(33 * 9, 33, 30, 30,x1);
+            this.grap[70][x1].setValues(33 * 9, 66, 30, 30,x1);
+            this.grap[100][x1].setValues(33 * 9, 99, 30, 30,x1);
 
             x1 = 5;
             for (t = 0; t <= 6; t++)

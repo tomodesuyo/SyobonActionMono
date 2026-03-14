@@ -135,6 +135,8 @@
         protected int[] srmove;
         protected int[] srd;
         protected int[] sr;
+        protected int[] sa;
+        protected int[] sb;
         protected int[] sc;
         protected int[] nd;
         protected int[] ne;
@@ -742,6 +744,23 @@
                 if (Keyboard.GetState().IsKeyDown(Keys.F1))
                 {
                     this.main = 100;
+                }
+
+                if (Keyboard.GetState().IsKeyDown(Keys.Q))
+                {
+                    // mtype = 0;
+                    this.md = -1300;
+                    // ダッシュ中
+                    this.xx[22] = 200;
+                    if (this.mc >= this.xx[22] || this.mc <= -this.xx[22])
+                    {
+                        this.md = -1400;
+                    }
+                    this.xx[22] = 600;
+                    if (this.mc >= this.xx[22] || this.mc <= -this.xx[22])
+                    {
+                        this.md = -1500;
+                    }
                 }
 
                 if (Keyboard.GetState().IsKeyDown(Keys.O))
@@ -4197,6 +4216,37 @@
                     this.stc = 0;
                 }
 
+                if (Keyboard.GetState().IsKeyDown(Keys.D5))
+                {
+                    sta = 2;
+                    stb = 1;
+                    stc = 0;
+                }
+                if (Keyboard.GetState().IsKeyDown(Keys.D6))
+                {
+                    sta = 2;
+                    stb = 2;
+                    stc = 0;
+                }
+                if (Keyboard.GetState().IsKeyDown(Keys.D7))
+                {
+                    sta = 2;
+                    stb = 3;
+                    stc = 0;
+                }
+                if (Keyboard.GetState().IsKeyDown(Keys.D8))
+                {
+                    sta = 2;
+                    stb = 4;
+                    stc = 0;
+                }
+                if (Keyboard.GetState().IsKeyDown(Keys.D9))
+                {
+                    sta = 3;
+                    stb = 1;
+                    stc = 0;
+                }
+
                 if (Keyboard.GetState().IsKeyDown(Keys.D0))
                 {
                     this.xx[0] = 1;
@@ -4228,14 +4278,18 @@
             this.spriteBatch.Begin();
             this.rpaint();
             this.spriteBatch.End();
-            this.xx[0] = 30;
+            
+            // this.xx[0] = 30;
+            this.TargetElapsedTime = TimeSpan.FromMilliseconds(1000.0 / 30);
             if (Keyboard.GetState().IsKeyDown(Keys.Space))
             {
-                this.xx[0] = 60;
+                // this.xx[0] = 60;
+                this.TargetElapsedTime = TimeSpan.FromMilliseconds(1000.0 / 60);
             }
 
             // wait2(stime,(long)gameTime.TotalGameTime.TotalMilliseconds,1000/xx[0]);
-        }
+
+        }// Mainprogram()
 
         protected void rpaint()
         {
@@ -4258,6 +4312,16 @@
             if (this.stagecolor == 4)
             {
                 this.graphics.GraphicsDevice.Clear(new Color(10, 10, 10));
+            }
+
+            if (this.stagecolor == 5)
+            {
+                this.graphics.GraphicsDevice.Clear(new Color(160, 180, 250));
+                this.mrzimen = 1;
+            }
+            else
+            {
+                this.mrzimen = 0;
             }
 
             if (this.main == 1 && this.zxon >= 1)
@@ -4310,7 +4374,7 @@
                         {
                             this.spriteBatch.DrawString(
                                 this.resources.returnFont(),
-                                "Message 1",
+                                "ゲームクリアー",
                                 new Vector2(this.xx[0] / 100 + this.fma, this.xx[1] / 100 + this.fmb),
                                 Color.White);
 
@@ -4321,7 +4385,7 @@
                         {
                             this.spriteBatch.DrawString(
                                 this.resources.returnFont(),
-                                "Message 2",
+                                "プレイしてくれてありがとー",
                                 new Vector2(this.xx[0] / 100 + this.fma, this.xx[1] / 100 + this.fmb),
                                 Color.White);
 
@@ -4353,7 +4417,7 @@
 
                         if (this.egtype[this.t] == 1)
                         {
-                            if (this.stagecolor <= 1 || this.stagecolor == 3) this.setcolor(9 * 16, 6 * 16, 3 * 16);
+                            if (this.stagecolor <= 1 || this.stagecolor == 3 || this.stagecolor == 5) this.setcolor(9 * 16, 6 * 16, 3 * 16);
                             if (this.stagecolor == 2) this.setcolor(0, 120, 160);
                             if (this.stagecolor == 4) this.setcolor(192, 192, 192);
                             this.fillarc(this.xx[0] / 100, this.xx[1] / 100, 7, 7);
@@ -4711,6 +4775,11 @@
                                     this.xx[9] = 60;
                                 }
 
+                                if (this.stagecolor == 5)
+                                {
+                                    this.xx[9] = 90;
+                                }
+
                                 this.xx[6] = 4 + this.xx[9];
 
                                 // drawimage(grap[xx[6]][1], xx[0] / 100, xx[1] / 100);
@@ -4745,6 +4814,11 @@
                                 if (this.stagecolor == 4)
                                 {
                                     this.xx[9] = 60;
+                                }
+
+                                if (this.stagecolor == 5)
+                                {
+                                    this.xx[9] = 90;
                                 }
 
                                 this.xx[6] = 4 + this.xx[9];
@@ -4824,6 +4898,11 @@
                         if (this.stagecolor == 4)
                         {
                             this.xx[9] = 60;
+                        }
+
+                        if (this.stagecolor == 5)
+                        {
+                            this.xx[9] = 90;
                         }
 
                         if (this.ttype[this.t] < 100)
@@ -5160,6 +5239,11 @@
                                 this.xx[29] = 60;
                             }
 
+                            if (this.stagecolor == 5)
+                            {
+                                this.xx[29] = 90;
+                            }
+
                             for (this.t3 = 0; this.t3 <= this.sc[this.t] / 3000; this.t3++)
                             {
                                 if (this.sxtype[this.t] == 0)
@@ -5217,7 +5301,7 @@
                         {
                             if (this.stype[this.t] >= 100 && this.stype[this.t] <= 299)
                             {
-                                if (this.stagecolor <= 1 || this.stagecolor == 3)
+                                if (this.stagecolor <= 1 || this.stagecolor == 3 || this.stagecolor == 5)
                                 {
                                     this.setc0();
                                 }
@@ -5388,22 +5472,23 @@
                     }
                 }
 
+                // プレイヤーのメッセージ
                 this.setc0();
                 if (this.mmsgtm >= 1)
                 {
                     this.mmsgtm--;
                     this.xs[0] = string.Empty;
-                    if (this.mmsgtype == 1) this.xs[0] = "Message 3";
-                    if (this.mmsgtype == 2) this.xs[0] = "Message 4";
-                    if (this.mmsgtype == 3) this.xs[0] = "Message 5";
-                    if (this.mmsgtype == 10) this.xs[0] = "Message 6";
-                    if (this.mmsgtype == 11) this.xs[0] = "Message 7";
-                    if (this.mmsgtype == 50) this.xs[0] = "Message 8";
-                    if (this.mmsgtype == 51) this.xs[0] = "Message 9";
-                    if (this.mmsgtype == 52) this.xs[0] = "Message 10";
-                    if (this.mmsgtype == 53) this.xs[0] = "Message 11";
-                    if (this.mmsgtype == 54) this.xs[0] = "Message 12";
-                    if (this.mmsgtype == 55) this.xs[0] = "Message 13";
+                    if (this.mmsgtype == 1) this.xs[0] = "おいしい…";
+                    if (this.mmsgtype == 2) this.xs[0] = "まずい…";
+                    if (this.mmsgtype == 3) this.xs[0] = "ぐふぅ!!";
+                    if (this.mmsgtype == 10) this.xs[0] = "うほっ!!!!";
+                    if (this.mmsgtype == 11) this.xs[0] = "燃えるぅーー!!";
+                    if (this.mmsgtype == 50) this.xs[0] = "あづーーーー!!";
+                    if (this.mmsgtype == 51) this.xs[0] = "ファイアー!!!!";
+                    if (this.mmsgtype == 52) this.xs[0] = "オワタｗ";
+                    if (this.mmsgtype == 53) this.xs[0] = "あ、足が～!!";
+                    if (this.mmsgtype == 54) this.xs[0] = "熱すぎる!!";
+                    if (this.mmsgtype == 55) this.xs[0] = "私は燃え尽きてしまった";
                     this.setc0();
                     this.str(this.xs[0], (this.ma + this.mnobia + 300) / 100 - 1, this.mb / 100 - 1);
                     this.str(this.xs[0], (this.ma + this.mnobia + 300) / 100 + 1, this.mb / 100 + 1);
@@ -5411,6 +5496,7 @@
                     this.str(this.xs[0], (this.ma + this.mnobia + 300) / 100, this.mb / 100);
                 }
 
+                // 敵キャラのメッセージ
                 this.setc0();
                 for (this.t = 0; this.t < this.amax; this.t++)
                 {
@@ -5419,44 +5505,56 @@
                         this.amsgtm[this.t]--;
                         this.xs[0] = string.Empty;
 
-                        if (this.amsgtype[this.t] == 1001) this.xs[0] = "Message 14";
-                        if (this.amsgtype[this.t] == 1002) this.xs[0] = "Message 15";
-                        if (this.amsgtype[this.t] == 1003) this.xs[0] = "Message 16";
-                        if (this.amsgtype[this.t] == 1004) this.xs[0] = "Message 17";
-                        if (this.amsgtype[this.t] == 1005) this.xs[0] = "Message 18";
-                        if (this.amsgtype[this.t] == 1006) this.xs[0] = "Message 19";
-                        if (this.amsgtype[this.t] == 1007) this.xs[0] = "Message 20";
-                        if (this.amsgtype[this.t] == 1008) this.xs[0] = "Message 21";
+                        if (this.amsgtype[this.t] == 1001) this.xs[0] = "遅すぎるんだよ!!";
+                        if (this.amsgtype[this.t] == 1002) this.xs[0] = "無駄無駄無駄無駄ァ!!";
+                        if (this.amsgtype[this.t] == 1003) this.xs[0] = "テラヨワス";
+                        if (this.amsgtype[this.t] == 1004) this.xs[0] = "ぷー クスクス";
+                        if (this.amsgtype[this.t] == 1005) this.xs[0] = "強靭!!無敵!!最強!!!!";
+                        if (this.amsgtype[this.t] == 1006) this.xs[0] = "性能の差だな…";
+                        if (this.amsgtype[this.t] == 1007) this.xs[0] = "カエレ!!";
+                        if (this.amsgtype[this.t] == 1008) this.xs[0] = "ニマニマ";
 
-                        if (this.amsgtype[this.t] == 1011) this.xs[0] = "Message 22";
-                        if (this.amsgtype[this.t] == 1012) this.xs[0] = "Message 23";
-                        if (this.amsgtype[this.t] == 1013) this.xs[0] = "Message 24";
-                        if (this.amsgtype[this.t] == 1014) this.xs[0] = "Message 25";
-                        if (this.amsgtype[this.t] == 1015) this.xs[0] = "Message 26";
-                        if (this.amsgtype[this.t] == 1016) this.xs[0] = "Message 27";
-                        if (this.amsgtype[this.t] == 1017) this.xs[0] = "Message 28";
-                        if (this.amsgtype[this.t] == 1018) this.xs[0] = "Message 29";
+                        if (this.amsgtype[this.t] == 1011) this.xs[0] = "嘘だ!!";
+                        if (this.amsgtype[this.t] == 1012) this.xs[0] = "HE☆TA☆RE";
+                        if (this.amsgtype[this.t] == 1013) this.xs[0] = "ごめんねぇ 強くてさぁ!!";
+                        if (this.amsgtype[this.t] == 1014) this.xs[0] = "貴様 それでも軍人か!?";
+                        if (this.amsgtype[this.t] == 1015) this.xs[0] = "ゆとりはいい 想像を絶する";
+                        if (this.amsgtype[this.t] == 1016) this.xs[0] = "粛清してやる!!";
+                        if (this.amsgtype[this.t] == 1017) this.xs[0] = "さぁ 悪い子はどんどん(ry";
+                        if (this.amsgtype[this.t] == 1018) this.xs[0] = "戦闘力 1 のごみくずが…";
 
-                        if (this.amsgtype[this.t] == 1021) this.xs[0] = "Message 30";
-                        if (this.amsgtype[this.t] == 1022) this.xs[0] = "Message 31";
-                        if (this.amsgtype[this.t] == 1023) this.xs[0] = "Message 32";
-                        if (this.amsgtype[this.t] == 1024) this.xs[0] = "Message 33";
-                        if (this.amsgtype[this.t] == 1025) this.xs[0] = "Message 34";
-                        if (this.amsgtype[this.t] == 1026) this.xs[0] = "Message 35";
-                        if (this.amsgtype[this.t] == 1027) this.xs[0] = "Message 36";
-                        if (this.amsgtype[this.t] == 1028) this.xs[0] = "Message 37";
+                        if (this.amsgtype[this.t] == 1021) this.xs[0] = "グゥレイトォ!!";
+                        if (this.amsgtype[this.t] == 1022) this.xs[0] = "ポルポルポルポルゥ!!";
+                        if (this.amsgtype[this.t] == 1023) this.xs[0] = "ヤッフー!!";
+                        if (this.amsgtype[this.t] == 1024) this.xs[0] = "フハハハハハハ";
+                        if (this.amsgtype[this.t] == 1025) this.xs[0] = "神に祈る間をやろう";
+                        if (this.amsgtype[this.t] == 1026) this.xs[0] = "ざわ…ざわ……";
+                        if (this.amsgtype[this.t] == 1027) this.xs[0] = "え？俺勝っちゃったの？";
+                        if (this.amsgtype[this.t] == 1028) this.xs[0] = "これぞ 必 殺!!";
 
-                        if (this.amsgtype[this.t] == 15) this.xs[0] = "Message 38";
-                        if (this.amsgtype[this.t] == 18) this.xs[0] = "Message 39";
-                        if (this.amsgtype[this.t] == 20) this.xs[0] = "Message 40";
-                        if (this.amsgtype[this.t] == 21) this.xs[0] = "Message 41";
-                        if (this.amsgtype[this.t] == 24) this.xs[0] = "Message 42";
-                        if (this.amsgtype[this.t] == 25) this.xs[0] = "Message 43";
-                        if (this.amsgtype[this.t] == 30) this.xs[0] = "Message 44";
-                        if (this.amsgtype[this.t] == 31) this.xs[0] = "Message 45";
+                        if (this.amsgtype[this.t] == 1031) this.xs[0] = "ヤッフー!!";
+                        if (this.amsgtype[this.t] == 1032) this.xs[0] = "え?俺勝っちゃったの?";
+                        if (this.amsgtype[this.t] == 1033) this.xs[0] = "貴様の死に場所はここだ!";
+                        if (this.amsgtype[this.t] == 1034) this.xs[0] = "身の程知らずが……";
+                        if (this.amsgtype[this.t] == 1035) this.xs[0] = "油断が死を招く";
+                        if (this.amsgtype[this.t] == 1036) this.xs[0] = "おめでたい奴だ";
+                        if (this.amsgtype[this.t] == 1037) this.xs[0] = "屑が!!";
+                        if (this.amsgtype[this.t] == 1038) this.xs[0] = "無謀な……";
 
-                        if (this.amsgtype[this.t] == 50) this.xs[0] = "Message 46";
-                        if (this.amsgtype[this.t] == 85) this.xs[0] = "Message 47";
+                        if (this.amsgtype[this.t] == 15) this.xs[0] = "鉄壁!!よって、無敵!!";
+                        if (this.amsgtype[this.t] == 16) this.xs[0] = "丸腰で勝てるとでも?";
+                        if (this.amsgtype[this.t] == 17) this.xs[0] = "パリイ!!";
+                        if (this.amsgtype[this.t] == 18) this.xs[0] = "ざまぁｗ";
+                        if (this.amsgtype[this.t] == 20) this.xs[0] = "Zzz";
+                        if (this.amsgtype[this.t] == 21) this.xs[0] = "ク、クマー";
+                        if (this.amsgtype[this.t] == 24) this.xs[0] = "？";
+                        if (this.amsgtype[this.t] == 25) this.xs[0] = "うほっ!!!!";
+                        if (this.amsgtype[this.t] == 30) this.xs[0] = "うめぇ!!";
+                        if (this.amsgtype[this.t] == 31) this.xs[0] = "ブロックを侮ったな?";
+                        if (this.amsgtype[this.t] == 32) this.xs[0] = "シャキーン";
+
+                        if (this.amsgtype[this.t] == 50) this.xs[0] = "ビーー";
+                        if (this.amsgtype[this.t] == 85) this.xs[0] = "ポールアターック!!";
                         if (this.amsgtype[this.t] != 31)
                         {
                             this.xx[5] = (this.aa[this.t] + this.anobia[this.t] + 300 - this.screenX) / 100;
@@ -5552,25 +5650,26 @@
             {
                 this.setcolor(255, 255, 255);
                 this.setc1();
-                this.str("Message 48", 240 - 13 * 20 / 2, this.xx[12] / 100);
-                this.str("Message 49", 240 - 9 * 20 / 2, this.xx[13] / 100);
-                this.str("Message 50", 240 - 6 * 20 / 2, this.xx[14] / 100);
-                this.str("Message 51", 240 - 9 * 20 / 2, this.xx[15] / 100);
-                this.str("Message 52", 240 - 8 * 20 / 2, this.xx[16] / 100);
-                this.str("Message 53", 240 - 9 * 20 / 2, this.xx[17] / 100);
-                this.str("Message 54", 240 - 8 * 20 / 2, this.xx[18] / 100);
-                this.str("Message 55", 240 - 9 * 20 / 2, this.xx[19] / 100);
-                this.str("Message 56", 240 - 6 * 20 / 2, this.xx[20] / 100);
-                this.str("Message 57", 240 - 3 * 20 / 2, this.xx[21] / 100);
-                this.str("Message 58", 240 - 3 * 20 / 2, this.xx[22] / 100);
-                this.str("Message 59", 240 - 3 * 20 / 2, this.xx[23] / 100);
-                this.str("Message 60", 240 - 6 * 20 / 2, this.xx[24] / 100);
-                this.str("Message 61", 240 - 3 * 20 / 2, this.xx[25] / 100);
-                this.str("Message 62", 240 - 16 * 20 / 2, this.xx[26] / 100);
-                this.str("Message 63", 240 - 5 * 20 / 2, this.xx[27] / 100);
-                this.str("Message 64", 240 - 16 * 20 / 2, this.xx[28] / 100);
-                this.str("Message 65", 240 - 2 * 20 / 2, this.xx[29] / 100);
-                this.str("Message 66", 240 - 22 * 20 / 2, this.xx[30] / 100);
+                this.str("制作・プレイに関わった方々", 240 - 13 * 20 / 2, this.xx[12] / 100);
+                this.str("ステージ１　プレイ", 240 - 9 * 20 / 2, this.xx[13] / 100);
+                this.str("先輩　Ⅹ～Ｚ", 240 - 6 * 20 / 2, this.xx[14] / 100);
+                this.str("ステージ２　プレイ", 240 - 9 * 20 / 2, this.xx[15] / 100);
+                this.str("友人　willowlet ", 240 - 8 * 20 / 2, this.xx[16] / 100);
+                this.str("ステージ３　プレイ", 240 - 9 * 20 / 2, this.xx[17] / 100);
+                this.str("友人　willowlet ", 240 - 8 * 20 / 2, this.xx[18] / 100);
+                this.str("ステージ４　プレイ", 240 - 9 * 20 / 2, this.xx[19] / 100);
+                this.str("友人２　ann ", 240 - 6 * 20 / 2, this.xx[20] / 100);
+                this.str("ご協力", 240 - 3 * 20 / 2, this.xx[21] / 100);
+                this.str("Ｔ先輩", 240 - 3 * 20 / 2, this.xx[22] / 100);
+                this.str("Ｓ先輩", 240 - 3 * 20 / 2, this.xx[23] / 100);
+                this.str("動画技術提供", 240 - 6 * 20 / 2, this.xx[24] / 100);
+                this.str("Ｋ先輩", 240 - 3 * 20 / 2, this.xx[25] / 100);
+                this.str("動画キャプチャ・編集・エンコード", 240 - 16 * 20 / 2, this.xx[26] / 100);
+                this.str("willowlet ", 240 - 5 * 20 / 2, this.xx[27] / 100);
+                this.str("プログラム・描画・ネタ・動画編集", 240 - 16 * 20 / 2, this.xx[28] / 100);
+                this.str("ちく", 240 - 2 * 20 / 2, this.xx[29] / 100);
+
+                this.str("プレイしていただき　ありがとうございました～", 240 - 22 * 20 / 2, this.xx[30] / 100);
             }
 
             if (this.main == 10)
@@ -5587,10 +5686,14 @@
                     this.resources.returnFrame(0, 0),
                     Color.White);
 
-                // DrawFormatString(230, 200, GetColor(255, 255, 255), " ~ %d", nokori);
-                this.setc1();
-                this.str("  X " + this.nokori, 230, 200);
-                this.setc0();
+                // DrawFormatString(230, 200, new Color(new Vector3((float)1, (float)1, (float)1)), " ~ %d", nokori);
+                this.spriteBatch.DrawString(this.resources.returnFont(), "  X " + this.nokori, new Vector2(230, 200), Color.White);
+
+                // DrawFormatString(xx[0]/100+fma,xx[1]/100+fmb,GetColor(255,255,255),"ƒQ[ƒ€ƒNƒŠƒA[");
+                // this.setc1();
+                // this.setcolor(255, 255, 255);
+                // this.str("  X " + this.nokori, 230, 200);
+                // this.setc0();
             }
 
             if (this.main == 100)
@@ -5753,6 +5856,7 @@
             this.nco = 0;
         }
 
+        // ステージロード
         protected void stagep()
         {
             this.scrollx = 3600 * 100;
@@ -7428,7 +7532,254 @@
                     }
                 }
             }
+
+            //
+            if (this.sta == 2 && this.stb == 1 && this.stc == 0)
+            {// 2-1
+                byte[][] stagedatex;
+                stagedatex = new byte[17][];
+                stagedatex[0] = new byte[] { 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                stagedatex[1] = new byte[] { 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 82, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                stagedatex[2] = new byte[] { 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 0, 0, 4, 0, 0, 4, 0, 0, 0, 0, 4, 0, 0, 82, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0, 0, 0, 0, 0, 0, 0, 0 };
+                stagedatex[3] = new byte[] { 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 0, 82, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                stagedatex[4] = new byte[] { 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0, 0, 4, 4, 4, 4, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                stagedatex[5] = new byte[] { 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 0, 0, 0, 0, 0, 4, 4, 0, 0, 0, 0, 0, 0, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                stagedatex[6] = new byte[] { 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                stagedatex[7] = new byte[] { 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 4, 4, 4, 4, 4, 0, 0, 4, 7, 7, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 2, 2, 98, 2, 4, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                stagedatex[8] = new byte[] { 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 10, 10, 10, 0, 0, 10, 10, 10, 10, 4, 1, 1, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 7, 0, 4, 4, 4, 4, 4, 4, 4, 4 };
+                stagedatex[9] = new byte[] { 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 98, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                stagedatex[10] = new byte[] { 0, 0, 0, 0, 0, 0, 0, 4, 7, 7, 7, 4, 4, 4, 0, 0, 0, 0, 80, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 80, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 80, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                stagedatex[11] = new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 7, 0, 0, 4, 4, 4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                stagedatex[12] = new byte[] { 0, 0, 0, 0, 0, 81, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 81, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 81, 0, 0, 0, 81, 0, 0, 0, 0, 0, 0, 0, 0, 50, 0, 0, 50, 0, 0, 50, 81, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 81, 0, 0, 0, 0, 0, 0, 4, 0, 0, 4, 4, 4, 4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0 };
+                stagedatex[13] = new byte[] { 5, 5, 0, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 0, 0, 0, 5, 5, 5, 5, 5, 5, 0, 0, 0, 0, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 0, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 0, 0, 0, 0, 0, 5, 5, 0, 0, 0, 0, 0, 5, 5, 5 };
+                stagedatex[14] = new byte[] { 6, 6, 0, 0, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 0, 0, 0, 0, 6, 6, 6, 6, 6, 6, 0, 0, 0, 0, 0, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 0, 0, 0, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 0, 0, 0, 0, 0, 0, 6, 6, 0, 0, 0, 0, 0, 6, 6, 6 };
+                stagedatex[15] = new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+
+                this.tyobi(8 * 29, 9 * 29 - 12, 100);
+                this.tyobi(13 * 29, 9 * 29 - 12, 102);
+                this.tyobi(14 * 29, 5 * 29 - 12, 101);
+                this.tyobi(35 * 29, 8 * 29 - 12, 110);
+                this.tyobi(47 * 29, 9 * 29 - 12, 103);
+                this.tyobi(59 * 29, 9 * 29 - 12, 112);
+                this.tyobi(67 * 29, 9 * 29 - 12, 104);
+                this.sco = 0;
+                this.t = this.sco;
+                this.enemyX[this.t] = 20 * 29 * 100 + 500;
+                this.enemyY[this.t] = -6000;
+                this.sc[this.t] = 5000;
+                this.sd[this.t] = 70000;
+                this.stype[this.t] = 100;
+                this.sco++;
+                this.t = this.sco;
+                this.enemyX[this.t] = 54 * 29 * 100 - 500;
+                this.enemyY[this.t] = -6000;
+                this.sc[this.t] = 7000;
+                this.sd[this.t] = 70000;
+                this.stype[this.t] = 101;
+                this.sco++;
+                this.t = this.sco;
+                this.enemyX[this.t] = 112 * 29 * 100 + 1000;
+                this.enemyY[this.t] = -6000;
+                this.sc[this.t] = 3000;
+                this.sd[this.t] = 70000;
+                this.stype[this.t] = 102;
+                this.sco++;
+                this.t = this.sco;
+                this.enemyX[this.t] = 117 * 29 * 100;
+                this.enemyY[this.t] = (2 * 29 - 12) * 100 - 1500;
+                this.sc[this.t] = 15000;
+                this.sd[this.t] = 3000;
+                this.stype[this.t] = 103;
+                this.sco++;
+                this.t = this.sco;
+                this.enemyX[this.t] = 125 * 29 * 100;
+                this.enemyY[this.t] = -6000;
+                this.sc[this.t] = 9000;
+                this.sd[this.t] = 70000;
+                this.stype[this.t] = 101;
+                this.sco++;
+                this.t = 28;
+                this.enemyX[this.t] = 29 * 29 * 100 + 500;
+                this.enemyY[this.t] = (9 * 29 - 12) * 100;
+                this.sc[this.t] = 6000;
+                this.sd[this.t] = 12000 - 200;
+                this.stype[this.t] = 50;
+                this.sco++;
+                this.t = this.sco;
+                this.enemyX[this.t] = 49 * 29 * 100;
+                this.enemyY[this.t] = (5 * 29 - 12) * 100;
+                this.sc[this.t] = 9000 - 1;
+                this.sd[this.t] = 3000;
+                this.stype[this.t] = 51;
+                this.sgtype[this.t] = 0;
+                this.sco++;
+                this.t = this.sco;
+                this.enemyX[this.t] = 72 * 29 * 100;
+                this.enemyY[this.t] = (13 * 29 - 12) * 100;
+                this.sc[this.t] = 3000 * 5 - 1;
+                this.sd[this.t] = 3000;
+                this.stype[this.t] = 52;
+                this.sco++;
+                this.bco = 0;
+                this.t = this.bco;
+                this.ba[this.t] = 27 * 29 * 100;
+                this.bb[this.t] = (9 * 29 - 12) * 100;
+                this.btype[this.t] = 0;
+                this.bxtype[this.t] = 1;
+                this.bco++;
+                this.t = this.bco;
+                this.ba[this.t] = 103 * 29 * 100;
+                this.bb[this.t] = (5 * 29 - 12 + 10) * 100;
+                this.btype[this.t] = 80;
+                this.bxtype[this.t] = 0;
+                this.bco++;
+
+                this.t = 0;
+                for (this.t = 0; this.t < stagedatex.Length - 1; this.t++)
+                {
+                    for (this.tt = 0; this.tt < stagedatex[this.t].Length - 1; this.tt++)
+                    {
+                        this.stagedate[this.t][this.tt] = 0;
+                        this.stagedate[this.t][this.tt] = stagedatex[this.t][this.tt];
+                    }
+                }
+            }
+
+            if (this.sta == 3 && this.stb == 1 && this.stc == 0)
+            { // 3-1
+                this.ma = 5600;
+                this.mb = 32000;
+                this.resources.ChangeMusic(17);
+                this.stagecolor = 5;
+                this.scrollx = 2900 * (112 - 19);
+
+                byte[][] stagedatex;
+                stagedatex = new byte[16][];
+                stagedatex[0] = new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                stagedatex[0] = new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 82, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                stagedatex[1] = new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 4, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 99, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                stagedatex[2] = new byte[] { 0, 0, 0, 0, 0, 0, 82, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 7, 0, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 7, 7, 7, 7, 4, 0, 0, 82, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                stagedatex[3] = new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 10, 10, 0, 0, 10, 10, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 0, 4, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                stagedatex[4] = new byte[] { 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 7, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 4, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                stagedatex[5] = new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 4, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                stagedatex[6] = new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 3, 4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                stagedatex[7] = new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 7, 4, 4, 4, 4, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 4, 4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 0, 0, 0, 4, 0, 7, 7, 4, 4, 4, 4, 0, 4, 4, 4, 4, 4, 4, 4 };
+                stagedatex[8] = new byte[] { 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 4, 0, 4, 4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 4 };
+                stagedatex[9] = new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 4, 4, 4, 4, 4, 4, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 4 };
+                stagedatex[10] = new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 30, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 4 };
+                stagedatex[11] = new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 51, 1, 0, 81, 0, 0, 1, 1, 1, 1, 1, 7, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 7, 0, 0, 4, 4, 4, 4, 4, 4, 4, 4, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 4 };
+                stagedatex[12] = new byte[] { 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 0, 0, 0, 0, 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 5, 5, 5, 5, 5, 5, 0, 0, 7, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5 };
+                stagedatex[13] = new byte[] { 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 0, 0, 0, 0, 0, 6, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 6, 6, 6, 6, 6, 6, 0, 0, 0, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 0, 0, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6 };
+                stagedatex[14] = new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+
+                ;
+                // 追加情報
+                this.tco = 0;
+                this.t = this.tco;
+                //
+                this.txtype[this.tco] = 10;
+                this.tyobi(2 * 29, 9 * 29 - 12, 300);
+                this.tco += 1;
+                this.t = this.tco;
+                //
+                this.txtype[this.tco] = 1;
+                this.tyobi(63 * 29, 13 * 29 - 12, 115);
+                this.tco += 1;
+                this.t = this.tco;
+                //
+                this.txtype[this.tco] = 1;
+                this.tyobi(64 * 29, 13 * 29 - 12, 115);
+                this.tco += 1;
+                this.t = this.tco;
+                //
+                this.sco = 0;
+                this.t = this.sco;
+                // this.sa[this.sco] = 13 * 29 * 100;
+                // this.sb[this.sco] = (13 * 29 - 12) * 100;
+                this.sc[this.sco] = 9000 - 1;
+                this.sd[this.sco] = 3000;
+                this.stype[this.sco] = 52;
+                this.sxtype[this.sco] = 0;
+                this.sco += 1;
+                this.t = this.sco;
+                //
+                // this.sa[this.sco] = 84 * 29 * 100;
+                // this.sb[this.sco] = (13 * 29 - 12) * 100;
+                this.sc[this.sco] = 9000 - 1;
+                this.sd[this.sco] = 3000;
+                this.stype[this.sco] = 52;
+                this.sxtype[this.sco] = 0;
+                this.sco += 1;
+                this.t = this.sco;
+                //
+                this.bco = 0;
+                this.ba[this.bco] = 108 * 29 * 100;
+                this.bb[this.bco] = (6 * 29 - 12) * 100;
+                this.btype[this.bco] = 6;
+                this.bxtype[this.bco] = 1;
+                this.bco += 1;
+                this.t = this.bco;
+                //
+                this.ba[this.bco] = 33 * 29 * 100;
+                this.bb[this.bco] = (10 * 29 - 12) * 100;
+                this.btype[this.bco] = 82;
+                this.bxtype[this.bco] = 1;
+                this.bco += 1;
+                this.t = this.bco;
+                //
+                this.ba[this.bco] = 36 * 29 * 100;
+                this.bb[this.bco] = (0 * 29 - 12) * 100;
+                this.btype[this.bco] = 80;
+                this.bxtype[this.bco] = 1;
+                this.bco += 1;
+                this.t = this.bco;
+                //
+                this.ba[this.bco] = 78 * 29 * 100 + 1500;
+                this.bb[this.bco] = (7 * 29 - 12) * 100 + 1500;
+                this.btype[this.bco] = 88;
+                this.bxtype[this.bco] = 105;
+                this.bco += 1;
+                this.t = this.bco;
+                //
+                this.ba[this.bco] = 80 * 29 * 100 + 1500;
+                this.bb[this.bco] = (7 * 29 - 12) * 100 + 1500;
+                this.btype[this.bco] = 87;
+                this.bxtype[this.bco] = 105;
+                this.bco += 1;
+                this.t = this.bco;
+                //
+                this.ba[this.bco] = 85 * 29 * 100;
+                this.bb[this.bco] = (11 * 29 - 12) * 100;
+                this.btype[this.bco] = 82;
+                this.bxtype[this.bco] = 1;
+                this.bco += 1;
+                this.t = this.bco;
+                //
+                this.srco = 0;
+                this.sra[this.srco] = 41 * 29 * 100;
+                this.srb[this.srco] = (3 * 29 - 12) * 100;
+                this.src[this.srco] = 3 * 3000;
+                this.srtype[this.srco] = 0;
+                this.sracttype[this.srco] = 0;
+                this.sre[this.srco] = 0;
+                this.srsp[this.srco] = 3;
+                this.srco = 0;
+                //
+                this.t = 0;
+                for (this.t = 0; this.t < stagedatex.Length - 1; this.t++)
+                {
+                    for (this.tt = 0; this.tt < stagedatex[this.t].Length - 1; this.tt++)
+                    {
+                        this.stagedate[this.t][this.tt] = 0;
+                        this.stagedate[this.t][this.tt] = stagedatex[this.t][this.tt];
+                    }
+                }
+            }
+
+
         }
+
+
 
         protected void str(string message, int x, int y)
         {
@@ -7452,59 +7803,104 @@
                 if (this.tmsg == 0)
                 {
                     this.setc1();
-                    this.txmsg("Message 67", 0);
+                    this.txmsg("テスト　hoge", 0);
                 }
 
                 if (this.tmsg == 1)
                 {
                     this.setc1();
-                    this.txmsg("Message 68", 0);
-                    this.txmsg("Message 69", 1);
-                    this.txmsg("Message 70", 2);
-                    this.txmsg("Message 71", 4);
-                    this.txmsg("Message 72", 6);
+                    this.txmsg("", 0);
+                    this.txmsg("ステージ 1 より", 0);
+                    this.txmsg("特殊的なものが増えたので", 1);
+                    this.txmsg("気をつけてくれよ～", 2);
+                    this.txmsg("後、アイテムの一部を利用するかも…", 4);
+                    this.txmsg("                       ちく より", 6);
                 }
 
                 if (this.tmsg == 2)
                 {
-                    this.txmsg("Message 73", 3);
-                    this.txmsg("Message 74", 6);
+                    this.txmsg("            ？が必要です ", 3);
+                    this.txmsg("                         m9(^Д^)", 6);
                 }
 
                 if (this.tmsg == 3)
                 {
-                    this.txmsg("Message 75", 3);
-                    this.txmsg("Message 76", 6);
+                    this.txmsg("   別にコインに意味ないけどね ", 3);
+                    this.txmsg("                      (・ω・ )ﾉｼ", 6);
                 }
 
                 if (this.tmsg == 4)
                 {
-                    this.txmsg("Message 77", 2);
-                    this.txmsg("Message 78", 4);
+                    this.txmsg("この先に隠しブロックがあります ", 2);
+                    this.txmsg("注意してください !!", 4);
                 }
 
                 if (this.tmsg == 5)
                 {
-                    this.txmsg("Message 79", 0);
-                    this.txmsg("Message 80", 1);
-                    this.txmsg("Message 81", 3);
-                    this.txmsg("Message 82", 6);
+                    this.txmsg("", 0);
+                    this.txmsg(" 前回よりも難易度を下げましたので", 1);
+                    this.txmsg(" 気楽にプレイしてください    ", 3);
+                    this.txmsg("                       ちく より", 6);
+                }
+
+                if (this.tmsg == 6)
+                {
+                    this.txmsg("", 0);
+                    this.txmsg(" そこにいる敵のそばによると、      ", 1);
+                    this.txmsg(" 自分と一緒にジャンプしてくれます。", 2);
+                    this.txmsg("   可愛いですね。                  ", 3);
+                }
+
+                if (this.tmsg == 7)
+                {
+                    this.txmsg("", 0);
+                    this.txmsg(" あの敵は連れて来れましたか?、     ", 1);
+                    this.txmsg(" 連れて来れなかった貴方は、        ", 2);
+                    this.txmsg(" そこの落とし穴から Let's dive!    ", 3);
+                }
+
+                if (this.tmsg == 8)
+                {
+                    this.txmsg("そんな容易に", 1);
+                    this.txmsg("ヒントに頼るもんじゃないぜ", 2);
+                    this.txmsg("ほら、さっさと次行きな!!", 3);
+                }
+
+                if (this.tmsg == 9)
+                {
+                    this.txmsg(" 正真正銘のファイナルステージ。    ", 1);
+                    this.txmsg(" クリアすれば遂にエンディング!!    ", 2);
+                    this.txmsg(" その土管から戻ってもいいんだぜ?   ", 3);
+                }
+
+                if (this.tmsg == 10)
+                {
+                    this.txmsg(" 床が凍ってるから、すっごい滑るよ。", 1);
+                    this.txmsg(" ", 2);
+                    this.txmsg(" 　                      ", 3);
+                }
+
+                if (this.tmsg == 11)
+                {
+                    this.txmsg(" ここは隠しステージ。              ", 1);
+                    this.txmsg(" クリアしても何もないけどね。      ", 2);
+                    this.txmsg(" 　                      ", 3);
                 }
 
                 if (this.tmsg == 80)
                 {
-                    this.txmsg("Message 83", 1);
-                    this.txmsg("Message 84", 2);
-                    this.txmsg("Message 85", 5);
+                    this.txmsg("そんな容易に", 1);
+                    this.txmsg("ヒントに頼るもんじゃないぜ", 2);
+                    this.txmsg("ほら、さっさと次行きな!!", 5);
                 }
 
                 if (this.tmsg == 100)
                 {
-                    this.txmsg("Message 86", 0);
-                    this.txmsg("Message 87", 2);
-                    this.txmsg("Message 88", 3);
-                    this.txmsg("Message 89", 5);
-                    this.txmsg("Message 90", 6);
+                    this.txmsg("え？私ですか？ ", 0);
+                    this.txmsg("いやぁ、ただの通りすがりの", 2);
+                    this.txmsg("ヒントブロックですよ～", 3);
+                    this.txmsg("決して怪しいブロックじゃないですよ", 5);
+                    this.txmsg("                          (…チッ)", 6);
                 }
             }
 
@@ -7866,7 +8262,7 @@
                                 {
                                     this.ad[this.t] = 0;
                                 }
- // =-ad[t]*2/3;}
+                                // =-ad[t]*2/3;}
                             }
                         }
 
