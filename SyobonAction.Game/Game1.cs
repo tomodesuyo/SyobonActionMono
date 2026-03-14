@@ -12,6 +12,7 @@
     /// </summary>
     public class Game1 : Game
     {
+
         protected const int fxmax = 48000;
 
         protected const int fymax = 42000;
@@ -216,6 +217,81 @@
 
         protected string[] xs;
 
+        bool borderless = false;
+        KeyboardState oldKeyboard;
+
+
+        RenderTarget2D gameTarget;
+
+
+        const int GAME_WIDTH = 480;
+        const int GAME_HEIGHT = 424;
+
+
+
+
+
+        Matrix scaleMatrix;
+
+
+
+        void UpdateScale()
+        {
+            int w = GraphicsDevice.Viewport.Width;
+            int h = GraphicsDevice.Viewport.Height;
+
+            int scaleX = w / GAME_WIDTH;
+            int scaleY = h / GAME_HEIGHT;
+
+            int scale = Math.Max(1, Math.Min(scaleX, scaleY));
+
+            int offsetX = (w - GAME_WIDTH * scale) / 2;
+            int offsetY = (h - GAME_HEIGHT * scale) / 2;
+
+            scaleMatrix =
+                Matrix.CreateScale(scale) *
+                Matrix.CreateTranslation(offsetX, offsetY, 0);
+        }
+
+        void SetBorderlessFullscreen()
+        {
+            var display = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode;
+
+            graphics.IsFullScreen = false;
+            Window.IsBorderless = true;
+
+            graphics.PreferredBackBufferWidth = display.Width;
+            graphics.PreferredBackBufferHeight = display.Height;
+
+            graphics.ApplyChanges();
+        }
+
+        void ToggleBorderless()
+        {
+            borderless = !borderless;
+
+            if (borderless)
+            {
+                var display = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode;
+
+                Window.IsBorderless = true;
+
+                graphics.PreferredBackBufferWidth = display.Width;
+                graphics.PreferredBackBufferHeight = display.Height;
+            }
+            else
+            {
+                Window.IsBorderless = false;
+
+                graphics.PreferredBackBufferWidth = GAME_WIDTH;
+                graphics.PreferredBackBufferHeight = GAME_HEIGHT;
+            }
+
+            graphics.ApplyChanges();
+        }
+
+
+
         public Game1()
         {
             this.graphics = new GraphicsDeviceManager(this);
@@ -324,7 +400,40 @@
 
         protected override void Draw(GameTime gameTime)
         {
-            // graphics.GraphicsDevice.Clear(fontColor);
+            // ①ゲーム画面に描画
+            GraphicsDevice.SetRenderTarget(gameTarget);
+            GraphicsDevice.Clear(Color.Black);
+
+            spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+
+            rpaint(); // 既存のゲーム描画
+
+            spriteBatch.End();
+
+            // ②画面に表示
+            GraphicsDevice.SetRenderTarget(null);
+            GraphicsDevice.Clear(Color.Black);
+
+            int windowW = GraphicsDevice.Viewport.Width;
+            int windowH = GraphicsDevice.Viewport.Height;
+
+            int scaleX = windowW / GAME_WIDTH;
+            int scaleY = windowH / GAME_HEIGHT;
+
+            int scale = Math.Max(1, Math.Min(scaleX, scaleY));
+
+            int drawW = GAME_WIDTH * scale;
+            int drawH = GAME_HEIGHT * scale;
+
+            int offsetX = (windowW - drawW) / 2;
+            int offsetY = (windowH - drawH) / 2;
+
+            Rectangle dest = new Rectangle(offsetX, offsetY, drawW, drawH);
+
+            spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+            spriteBatch.Draw(gameTarget, dest, Color.White);
+            spriteBatch.End();
+
             base.Draw(gameTime);
         }
 
@@ -480,6 +589,12 @@
 
         protected override void Initialize()
         {
+            IsMouseVisible = true;
+            Window.AllowUserResizing = true;
+            Window.ClientSizeChanged += (s, e) => UpdateScale();
+            GraphicsDevice.Clear(Color.Black);
+
+
             this.graphics.PreferredBackBufferWidth = fxmax / 100;
             this.graphics.PreferredBackBufferHeight = fymax / 100;
             this.graphics.ApplyChanges();
@@ -628,11 +743,18 @@
                 this.nf[this.t] = this.resources.returnFrame(this.t, x1).Height;
             }
 
+            UpdateScale();
+
             base.Initialize();
         }
 
         protected override void LoadContent()
         {
+            gameTarget = new RenderTarget2D(
+            GraphicsDevice,
+            GAME_WIDTH,
+            GAME_HEIGHT
+            );
             this.spriteBatch = new SpriteBatch(this.GraphicsDevice);
             this.blank = new Texture2D(this.GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
             this.blank.SetData(new[] { Color.White });
@@ -640,6 +762,8 @@
 
         protected void MainProgram(GameTime gameTime)
         {
+
+
             this.stime = (long)gameTime.TotalGameTime.TotalMilliseconds;
             if (this.ending == 1)
             {
@@ -4357,7 +4481,10 @@
                 }
             }
 
-            this.spriteBatch.Begin();
+            spriteBatch.Begin(
+                samplerState: SamplerState.PointClamp,
+                transformMatrix: scaleMatrix
+            );
             this.rpaint();
             this.spriteBatch.End();
 
@@ -8017,6 +8144,14 @@
 
         protected override void Update(GameTime gameTime)
         {
+            var keyboard = Keyboard.GetState();
+
+            if (keyboard.IsKeyDown(Keys.F11) && oldKeyboard.IsKeyUp(Keys.F11))
+            {
+                ToggleBorderless();
+            }
+
+            oldKeyboard = keyboard;
             if (this.paused == false)
             {
                 this.MainProgram(gameTime);
