@@ -1218,6 +1218,14 @@
 
                         if (this.mtm == 20)
                         {
+                            if (this.mxtype == 6)
+                            {
+                                this.stc += 10;
+                            }
+                            else
+                            {
+                                this.stc++;
+                            }
                             this.mb = -80000000;
                             this.mxtype = 0;
                             this.blackx = 1;
@@ -1779,6 +1787,7 @@
                                                     this.brockbreak(this.t);
                                                 }
 
+                                                //コイン
                                                 if (this.ttype[this.t] == 2 && this.mzimen == 0)
                                                 {
                                                     this.resources.PlaySound(2);
@@ -1796,6 +1805,7 @@
                                                     this.ttype[this.t] = 3;
                                                 }
 
+                                                //隠し
                                                 if (this.ttype[this.t] == 7)
                                                 {
                                                     this.resources.PlaySound(2);
@@ -1816,6 +1826,13 @@
                                                     {
                                                         this.md = -this.md * 2 / 3;
                                                     }
+                                                }
+                                                // トゲ
+                                                if (this.ttype[this.t] == 10)
+                                                {
+                                                    this.mmsgtm = 30;
+                                                    this.mmsgtype = 3;
+                                                    this.mhp--;
                                                 }
                                             }
                                         }
@@ -3009,6 +3026,7 @@
                                 }
                             }
 
+                            // 疲れ初期化
                             if (this.srsp[this.t] == 2 && this.mc != -2400 && this.srmove[this.t] > 0)
                             {
                                 this.srmove[this.t]--;
@@ -3029,9 +3047,8 @@
                                 }
                             }
 
-                            if (this.ma + this.mnobia > this.xx[8] + this.xx[0]
-                                && this.ma < this.xx[8] + this.xx[12] - this.xx[0]
-                                && this.mb > this.xx[9] - this.xx[1] / 2 && this.mb < this.xx[9] + this.xx[1] / 2)
+                            // トゲ(下)
+                            if (this.ma + this.mnobia > this.xx[8] + this.xx[0] && this.ma < this.xx[8] + this.xx[12] - this.xx[0] && this.mb > this.xx[9] - this.xx[1] / 2 && this.mb < this.xx[9] + this.xx[1] / 2)
                             {
                                 if (this.srtype[this.t] == 2)
                                 {
@@ -3053,6 +3070,7 @@
                                 }
                             }
 
+                            //落下
                             if (this.sracttype[this.t] == 6)
                             {
                                 if (this.ma + this.mnobia > this.xx[8] + this.xx[0]
@@ -7745,6 +7763,14 @@
             //
             if (this.sta == 2 && this.stb == 1 && this.stc == 0)
             {// 2-1
+
+                this.ma = 5600;
+                this.mb = 32000;
+                // this.bgmchange(oto[100]);
+                this.stagecolor = 1;
+                this.scrollx = 2900 * (113 - 19);
+                //
+
                 byte[][] stagedatex;
                 stagedatex = new byte[17][];
                 stagedatex[0] = new byte[] { 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
@@ -7764,84 +7790,124 @@
                 stagedatex[14] = new byte[] { 6, 6, 0, 0, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 0, 0, 0, 0, 6, 6, 6, 6, 6, 6, 0, 0, 0, 0, 0, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 0, 0, 0, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 0, 0, 0, 0, 0, 0, 6, 6, 0, 0, 0, 0, 0, 6, 6, 6 };
                 stagedatex[15] = new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
-                this.tyobi(8 * 29, 9 * 29 - 12, 100);
-                this.tyobi(13 * 29, 9 * 29 - 12, 102);
-                this.tyobi(14 * 29, 5 * 29 - 12, 101);
-                this.tyobi(35 * 29, 8 * 29 - 12, 110);
-                this.tyobi(47 * 29, 9 * 29 - 12, 103);
-                this.tyobi(59 * 29, 9 * 29 - 12, 112);
-                this.tyobi(67 * 29, 9 * 29 - 12, 104);
+                // 追加情報
+                this.tco = 0;
+                this.t = this.tco;
+                //
+                this.txtype[this.tco] = 6;
+                this.tyobi(1 * 29, 9 * 29 - 12, 300);
+                this.tco += 1;
+                this.t = this.tco;
+                //
+                this.txtype[this.tco] = 0;
+                this.tyobi(40 * 29, 9 * 29 - 12, 110);
+                this.tco += 1;
+                this.t = this.tco;
+                //
+                this.txtype[this.tco] = 7;
+                this.tyobi(79 * 29, 7 * 29 - 12, 300);
+                this.tco += 1;
+                this.t = this.tco;
+                //
+                this.txtype[this.tco] = 2;
+                this.tyobi(83 * 29, 7 * 29 - 12, 102);
+                this.tco += 1;
+                this.t = this.tco;
+                //
+                this.txtype[this.tco] = 0;
+                this.tyobi(83 * 29, 2 * 29 - 12, 114);
+                this.tco += 1;
+                this.t = this.tco;
+                //
+                for (int i = -1; i > -7; i -= 1)
+                {
+                    this.tyobi(85 * 29, i * 29 - 12, 4);
+                    this.tco += 1;
+                    this.t = this.tco;
+                }
+                //
                 this.sco = 0;
+                this.enemyX[this.sco] = 30 * 29 * 100;
+                this.enemyY[this.sco] = (13 * 29 - 12) * 100;
+                this.sc[this.sco] = 12000 - 1;
+                this.sd[this.sco] = 3000;
+                this.stype[this.sco] = 52;
+                this.sxtype[this.sco] = 0;
+                this.sco += 1;
                 this.t = this.sco;
-                this.enemyX[this.t] = 20 * 29 * 100 + 500;
-                this.enemyY[this.t] = -6000;
-                this.sc[this.t] = 5000;
-                this.sd[this.t] = 70000;
-                this.stype[this.t] = 100;
-                this.sco++;
+                //
+                this.enemyX[this.sco] = 51 * 29 * 100;
+                this.enemyY[this.sco] = (4 * 29 - 12) * 100;
+                this.sc[this.sco] = 9000 - 1;
+                this.sd[this.sco] = 3000;
+                this.stype[this.sco] = 51;
+                this.sxtype[this.sco] = 0;
+                this.sco += 1;
                 this.t = this.sco;
-                this.enemyX[this.t] = 54 * 29 * 100 - 500;
-                this.enemyY[this.t] = -6000;
-                this.sc[this.t] = 7000;
-                this.sd[this.t] = 70000;
-                this.stype[this.t] = 101;
-                this.sco++;
+                //
+                this.enemyX[this.sco] = 84 * 29 * 100;
+                this.enemyY[this.sco] = (13 * 29 - 12) * 100;
+                this.sc[this.sco] = 9000 - 1;
+                this.sd[this.sco] = 3000;
+                this.stype[this.sco] = 52;
+                this.sxtype[this.sco] = 0;
+                this.sco += 1;
                 this.t = this.sco;
-                this.enemyX[this.t] = 112 * 29 * 100 + 1000;
-                this.enemyY[this.t] = -6000;
-                this.sc[this.t] = 3000;
-                this.sd[this.t] = 70000;
-                this.stype[this.t] = 102;
-                this.sco++;
+                //
+                this.enemyX[this.sco] = 105 * 29 * 100;
+                this.enemyY[this.sco] = (13 * 29 - 12) * 100;
+                this.sc[this.sco] = 15000 - 1;
+                this.sd[this.sco] = 3000;
+                this.stype[this.sco] = 52;
+                this.sxtype[this.sco] = 0;
+                this.sco += 1;
                 this.t = this.sco;
-                this.enemyX[this.t] = 117 * 29 * 100;
-                this.enemyY[this.t] = (2 * 29 - 12) * 100 - 1500;
-                this.sc[this.t] = 15000;
-                this.sd[this.t] = 3000;
-                this.stype[this.t] = 103;
-                this.sco++;
-                this.t = this.sco;
-                this.enemyX[this.t] = 125 * 29 * 100;
-                this.enemyY[this.t] = -6000;
-                this.sc[this.t] = 9000;
-                this.sd[this.t] = 70000;
-                this.stype[this.t] = 101;
-                this.sco++;
-                this.t = 28;
-                this.enemyX[this.t] = 29 * 29 * 100 + 500;
-                this.enemyY[this.t] = (9 * 29 - 12) * 100;
-                this.sc[this.t] = 6000;
-                this.sd[this.t] = 12000 - 200;
-                this.stype[this.t] = 50;
-                this.sco++;
-                this.t = this.sco;
-                this.enemyX[this.t] = 49 * 29 * 100;
-                this.enemyY[this.t] = (5 * 29 - 12) * 100;
-                this.sc[this.t] = 9000 - 1;
-                this.sd[this.t] = 3000;
-                this.stype[this.t] = 51;
-                this.sgtype[this.t] = 0;
-                this.sco++;
-                this.t = this.sco;
-                this.enemyX[this.t] = 72 * 29 * 100;
-                this.enemyY[this.t] = (13 * 29 - 12) * 100;
-                this.sc[this.t] = 3000 * 5 - 1;
-                this.sd[this.t] = 3000;
-                this.stype[this.t] = 52;
-                this.sco++;
+                //
                 this.bco = 0;
                 this.t = this.bco;
-                this.ba[this.t] = 27 * 29 * 100;
-                this.bb[this.t] = (9 * 29 - 12) * 100;
-                this.btype[this.t] = 0;
-                this.bxtype[this.t] = 1;
-                this.bco++;
+                //
+                this.ba[this.bco] = 6 * 29 * 100;
+                this.bb[this.bco] = (3 * 29 - 12) * 100;
+                this.btype[this.bco] = 80;
+                this.bxtype[this.bco] = 0;
+                this.bco += 1;
                 this.t = this.bco;
-                this.ba[this.t] = 103 * 29 * 100;
-                this.bb[this.t] = (5 * 29 - 12 + 10) * 100;
-                this.btype[this.t] = 80;
-                this.bxtype[this.t] = 0;
-                this.bco++;
+                //
+                this.ba[this.bco] = 13 * 29 * 100;
+                this.bb[this.bco] = (6 * 29 - 12) * 100;
+                this.btype[this.bco] = 4;
+                this.bxtype[this.bco] = 1;
+                this.bco += 1;
+                this.t = this.bco;
+                //
+                this.ba[this.bco] = 23 * 29 * 100;
+                this.bb[this.bco] = (7 * 29 - 12) * 100;
+                this.btype[this.bco] = 80;
+                this.bxtype[this.bco] = 0;
+                this.bco += 1;
+                this.t = this.bco;
+                //
+                this.ba[this.bco] = 25 * 29 * 100;
+                this.bb[this.bco] = (7 * 29 - 12) * 100;
+                this.btype[this.bco] = 80;
+                this.bxtype[this.bco] = 1;
+                this.bco += 1;
+                this.t = this.bco;
+                //
+                this.ba[this.bco] = 27 * 29 * 100;
+                this.bb[this.bco] = (7 * 29 - 12) * 100;
+                this.btype[this.bco] = 80;
+                this.bxtype[this.bco] = 0;
+                this.bco += 1;
+                this.t = this.bco;
+                //
+                this.ba[this.bco] = 88 * 29 * 100;
+                this.bb[this.bco] = (12 * 29 - 12) * 100;
+                this.btype[this.bco] = 82;
+                this.bxtype[this.bco] = 1;
+                this.bco += 1;
+                this.t = this.bco;
+
 
                 this.t = 0;
                 for (this.t = 0; this.t < stagedatex.Length - 1; this.t++)
@@ -7853,6 +7919,411 @@
                     }
                 }
             }
+
+
+            if (this.sta == 2 && this.stb == 2 && this.stc == 0)
+            { // 2-2(地上)
+                // bgmchange(oto[100]);
+                this.stagecolor = 1;
+                this.scrollx = 2900 * (19 - 19);
+                //
+                byte[][] stagedatex;
+                stagedatex = new byte[17][];
+                stagedatex[0] = new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                stagedatex[01] = new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                stagedatex[2] = new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 82, 0, 0, 0, 0, 0, 0, 0 };
+                stagedatex[03] = new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                stagedatex[04] = new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                stagedatex[05] = new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                stagedatex[06] = new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                stagedatex[07] = new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                stagedatex[08] = new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                stagedatex[09] = new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 0, 0, 0 };
+                stagedatex[10] = new byte[] { 0, 80, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                stagedatex[11] = new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                stagedatex[12] = new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                stagedatex[13] = new byte[] { 5, 5, 5, 5, 5, 5, 5, 0, 0, 0, 0, 0, 0, 0, 5, 5, 5 };
+                stagedatex[14] = new byte[] { 6, 6, 6, 6, 6, 6, 6, 0, 0, 0, 0, 0, 0, 0, 6, 6, 6 };
+                stagedatex[15] = new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+
+                //
+                this.t = this.sco;
+                this.enemyX[this.t] = 14 * 29 * 100 + 200;
+                this.enemyY[this.t] = -6000;
+                this.sc[this.t] = 5000;
+                this.sd[this.t] = 70000;
+                this.stype[this.t] = 100;
+                this.sco += 1;
+                //
+                this.t = this.sco;
+                this.enemyX[this.t] = 12 * 29 * 100 + 1200;
+                this.enemyY[this.t] = -6000;
+                this.sc[this.t] = 7000;
+                this.sd[this.t] = 70000;
+                this.stype[this.t] = 101;
+                this.sco += 1;
+                //
+                this.t = this.sco;
+                this.enemyX[this.t] = 12 * 29 * 100;
+                this.enemyY[this.t] = (13 * 29 - 12) * 100;
+                this.sc[this.t] = 6000 - 1;
+                this.sd[this.t] = 3000;
+                this.stype[this.t] = 52;
+                this.sgtype[this.t] = 0;
+                this.sco += 1;
+                //
+                this.t = this.sco;
+                this.enemyX[this.t] = 14 * 29 * 100;
+                this.enemyY[this.t] = (9 * 29 - 12) * 100;
+                this.sc[this.t] = 6000;
+                this.sd[this.t] = 12000 - 200;
+                this.stype[this.t] = 50;
+                this.sgtype[this.t] = 1;
+                this.sco += 1;
+                //
+                this.tyobi(6 * 29, 9 * 29 - 12, 110);
+                //
+                for (this.t = 0; this.t < stagedatex.Length - 1; this.t++)
+                {
+                    for (this.tt = 0; this.tt < stagedatex[this.t].Length - 1; this.tt++)
+                    {
+                        this.stagedate[this.t][this.tt] = 0;
+                        this.stagedate[this.t][this.tt] = stagedatex[this.t][this.tt];
+                    }
+                }
+            }
+
+            if (this.sta == 2 && this.stb == 2 && this.stc == 1)
+            { // 2-2(地下)
+                // bgmchange(oto[103]);
+                this.stagecolor = 2;
+                this.ma = 7500;
+                this.mb = 9000;
+                this.scrollx = 2900 * (137 - 19);
+
+                byte[][] stagedatex;
+
+                stagedatex = new byte[17][];
+
+                stagedatex[0] = new byte[] { 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 98, 4, 4, 4, 4, 4, 4, 0, 0, 0, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 98, 1 };
+                stagedatex[01] = new byte[] { 4, 0, 0, 0, 0, 0, 0, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 10, 10, 10, 10, 10, 10, 10, 10, 10, 0, 0, 1 };
+                stagedatex[02] = new byte[] { 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 };
+                stagedatex[03] = new byte[] { 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 };
+                stagedatex[04] = new byte[] { 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 51, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 };
+                stagedatex[05] = new byte[] { 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 10, 10, 10, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 };
+                stagedatex[06] = new byte[] { 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 3, 0, 0, 0, 0, 0, 30, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 };
+                stagedatex[07] = new byte[] { 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 57, 0, 0, 0, 0, 0, 57, 0, 0, 0, 0, 0, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0, 10, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 44, 0, 0, 1, 1, 1, 1, 1, 1, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 };
+                stagedatex[08] = new byte[] { 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 7, 7, 7, 0, 97, 0, 0, 0, 1, 1, 1, 1, 1, 1, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 };
+                stagedatex[09] = new byte[] { 4, 7, 7, 7, 7, 7, 7, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 4, 0, 0, 0, 1, 1, 0, 0, 0, 0, 44, 0, 0, 1 };
+                stagedatex[10] = new byte[] { 4, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 0, 0, 0, 0, 1, 1, 0, 0, 0, 97, 0, 0, 0, 1 };
+                stagedatex[11] = new byte[] { 4, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1 };
+                stagedatex[12] = new byte[] { 4, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 4, 0, 0, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1 };
+                stagedatex[13] = new byte[] { 5, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 5, 5, 5, 5, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 5, 5, 5, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1 };
+                stagedatex[14] = new byte[] { 6, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 6, 6, 6, 6, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 6, 6, 6, 0, 0, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1 };
+                stagedatex[15] = new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+
+                //
+                this.bco = 0;
+                this.ba[this.bco] = 32 * 29 * 100 - 1400;
+                this.bb[this.bco] = (-2 * 29 - 12) * 100 + 500;
+                this.btype[this.bco] = 86;
+                this.bxtype[this.bco] = 0;
+                this.bco += 1;
+                //
+                this.ba[this.bco] = (31 * 29 - 12) * 100;
+                this.bb[this.bco] = (7 * 29 - 12) * 100;
+                this.btype[this.bco] = 7;
+                this.bxtype[this.bco] = 0;
+                this.bco += 1;
+                //
+                this.ba[this.bco] = 38 * 29 * 100 + 1500;
+                this.bb[this.bco] = (6 * 29 - 12) * 100 + 1500;
+                this.btype[this.bco] = 87;
+                this.bxtype[this.bco] = 107;
+                this.bco += 1;
+                //
+                this.ba[this.bco] = 38 * 29 * 100 + 1500;
+                this.bb[this.bco] = (6 * 29 - 12) * 100 + 1500;
+                this.btype[this.bco] = 88;
+                this.bxtype[this.bco] = 107;
+                this.bco += 1;
+                //
+                this.ba[this.bco] = 42 * 29 * 100 + 1500;
+                this.bb[this.bco] = (6 * 29 - 12) * 100 + 1500;
+                this.btype[this.bco] = 87;
+                this.bxtype[this.bco] = 107;
+                this.bco += 1;
+                //
+                this.ba[this.bco] = 42 * 29 * 100 + 1500;
+                this.bb[this.bco] = (6 * 29 - 12) * 100 + 1500;
+                this.btype[this.bco] = 88;
+                this.bxtype[this.bco] = 107;
+                this.bco += 1;
+                //
+                this.ba[this.bco] = 46 * 29 * 100 + 1500;
+                this.bb[this.bco] = (6 * 29 - 12) * 100 + 1500;
+                this.btype[this.bco] = 87;
+                this.bxtype[this.bco] = 107;
+                this.bco += 1;
+                //
+                this.ba[this.bco] = 46 * 29 * 100 + 1500;
+                this.bb[this.bco] = (6 * 29 - 12) * 100 + 1500;
+                this.btype[this.bco] = 88;
+                this.bxtype[this.bco] = 107;
+                this.bco += 1;
+                //
+                this.ba[this.bco] = 58 * 29 * 100;
+                this.bb[this.bco] = (7 * 29 - 12) * 100;
+                this.btype[this.bco] = 82;
+                this.bxtype[this.bco] = 1;
+                this.bco += 1;
+                //
+                this.ba[this.bco] = 66 * 29 * 100;
+                this.bb[this.bco] = (7 * 29 - 12) * 100;
+                this.btype[this.bco] = 82;
+                this.bxtype[this.bco] = 1;
+                this.bco += 1;
+                //
+                this.ba[this.bco] = 76 * 29 * 100 - 1400;
+                this.bb[this.bco] = (-2 * 29 - 12) * 100 + 500;
+                this.btype[this.bco] = 86;
+                this.bxtype[this.bco] = 0;
+                this.bco += 1;
+                //
+                this.sco = 0;
+                this.enemyX[this.sco] = 2 * 29 * 100;
+                this.enemyY[this.sco] = (13 * 29 - 12) * 100;
+                this.sc[this.sco] = 300000 - 6001;
+                this.sd[this.sco] = 3000;
+                this.stype[this.sco] = 52;
+                this.sxtype[this.sco] = 0;
+                this.sco += 1;
+                //
+                this.enemyX[this.sco] = 3 * 29 * 100;
+                this.enemyY[this.sco] = (7 * 29 - 12) * 100;
+                this.sc[this.sco] = 3000;
+                this.sd[this.sco] = 3000;
+                this.stype[this.sco] = 105;
+                this.sxtype[this.sco] = 0;
+                this.sco += 1;
+                //
+                this.enemyX[this.sco] = 107 * 29 * 100;
+                this.enemyY[this.sco] = (9 * 29 - 12) * 100;
+                this.sc[this.sco] = 9000 - 1;
+                this.sd[this.sco] = 24000;
+                this.stype[this.sco] = 52;
+                this.sxtype[this.sco] = 1;
+                this.sco += 1;
+                //
+                this.enemyX[this.sco] = 111 * 29 * 100;
+                this.enemyY[this.sco] = (7 * 29 - 12) * 100;
+                this.sc[this.sco] = 3000;
+                this.sd[this.sco] = 6000 - 200;
+                this.stype[this.sco] = 40;
+                this.sxtype[this.sco] = 0;
+                this.sco += 1;
+                //
+                this.enemyX[this.sco] = 113 * 29 * 100 + 1100;
+                this.enemyY[this.sco] = (0 * 29 - 12) * 100;
+                this.sc[this.sco] = 4700;
+                this.sd[this.sco] = 27000 - 1000;
+                this.stype[this.sco] = 0;
+                this.sxtype[this.sco] = 0;
+                this.sco += 1;
+                //
+                this.enemyX[this.sco] = 128 * 29 * 100;
+                this.enemyY[this.sco] = (9 * 29 - 12) * 100;
+                this.sc[this.sco] = 9000 - 1;
+                this.sd[this.sco] = 24000;
+                this.stype[this.sco] = 52;
+                this.sxtype[this.sco] = 1;
+                this.sco += 1;
+                //
+                this.enemyX[this.sco] = 131 * 29 * 100;
+                this.enemyY[this.sco] = (9 * 29 - 12) * 100;
+                this.sc[this.sco] = 3000;
+                this.sd[this.sco] = 6000 - 200;
+                this.stype[this.sco] = 40;
+                this.sxtype[this.sco] = 2;
+                this.sco += 1;
+                //
+                this.enemyX[this.sco] = 133 * 29 * 100 + 1100;
+                this.enemyY[this.sco] = (0 * 29 - 12) * 100;
+                this.sc[this.sco] = 4700;
+                this.sd[this.sco] = 32000;
+                this.stype[this.sco] = 0;
+                this.sxtype[this.sco] = 0;
+                this.sco += 1;
+                //
+                this.tco = 0;
+                this.txtype[this.tco] = 0;
+                this.tyobi(0 * 29, 0 * 29 - 12, 4);
+                this.tco = 1;
+                this.txtype[this.tco] = 0;
+                this.tyobi(2 * 29, 9 * 29 - 12, 4);
+                this.tco = 2;
+                this.txtype[this.tco] = 0;
+                this.tyobi(3 * 29, 9 * 29 - 12, 4);
+                this.tco += 1;
+                //
+                this.txtype[this.tco] = 1;
+                this.tyobi(5 * 29, 9 * 29 - 12, 115);
+                this.tco += 1;
+                this.txtype[this.tco] = 1;
+                this.tyobi(6 * 29, 9 * 29 - 12, 115);
+                this.tco += 1;
+                //
+                this.txtype[this.tco] = 1;
+                this.tyobi(5 * 29, 10 * 29 - 12, 115);
+                this.tco += 1;
+                this.txtype[this.tco] = 1;
+                this.tyobi(6 * 29, 10 * 29 - 12, 115);
+                this.tco += 1;
+                //
+                this.txtype[this.tco] = 1;
+                this.tyobi(5 * 29, 11 * 29 - 12, 115);
+                this.tco += 1;
+                this.txtype[this.tco] = 1;
+                this.tyobi(6 * 29, 11 * 29 - 12, 115);
+                this.tco += 1;
+                //
+                this.txtype[this.tco] = 1;
+                this.tyobi(5 * 29, 12 * 29 - 12, 115);
+                this.tco += 1;
+                this.txtype[this.tco] = 1;
+                this.tyobi(6 * 29, 12 * 29 - 12, 115);
+                this.tco += 1;
+                //
+                this.txtype[this.tco] = 1;
+                this.tyobi(70 * 29, 7 * 29 - 12, 115);
+                this.tco += 1;
+                this.txtype[this.tco] = 1;
+                this.tyobi(71 * 29, 7 * 29 - 12, 115);
+                this.tco += 1;
+                //
+                for (this.t = 0; this.t < stagedatex.Length - 1; this.t++)
+                {
+                    for (this.tt = 0; this.tt < stagedatex[this.t].Length - 1; this.tt++)
+                    {
+                        this.stagedate[this.t][this.tt] = 0;
+                        this.stagedate[this.t][this.tt] = stagedatex[this.t][this.tt];
+                    }
+                }
+            }
+
+            if (this.sta == 2 && this.stb == 2 && this.stc == 2)
+            { // 2-2 地上
+              //
+              // bgmchange(oto[100]);
+                this.stagecolor = 1;
+                this.scrollx = 2900 * (36 - 19);
+                this.ma = 7500;
+                this.mb = 3000 * 9;
+                //
+                byte[][] stagedatex;
+
+                stagedatex = new byte[17][];
+                stagedatex[0] = new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                stagedatex[01] = new byte[] { 0, 82, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                stagedatex[02] = new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 99, 0, 0, 0, 0, 0, 0, 0, 0 };
+                stagedatex[03] = new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                stagedatex[04] = new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 50, 51, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                stagedatex[05] = new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                stagedatex[06] = new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                stagedatex[07] = new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                stagedatex[08] = new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 50, 4, 4, 4, 4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                stagedatex[09] = new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                stagedatex[10] = new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                stagedatex[11] = new byte[] { 0, 0, 40, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+                stagedatex[12] = new byte[] { 0, 0, 41, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 54, 0, 0 };
+                stagedatex[13] = new byte[] { 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 0, 0, 0, 0, 0, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5 };
+                stagedatex[14] = new byte[] { 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 0, 0, 0, 0, 0, 0, 6, 6, 6, 6, 6, 6, 6, 6, 6 };
+                stagedatex[15] = new byte[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
+
+                //
+                this.bco = 0;
+                this.ba[this.bco] = 9 * 29 * 100;
+                this.bb[this.bco] = (12 * 29 - 12) * 100;
+                this.btype[this.bco] = 82;
+                this.bxtype[this.bco] = 1;
+                this.bco += 1;
+                //
+                this.ba[this.bco] = 10 * 29 * 100;
+                this.bb[this.bco] = (11 * 29 - 12) * 100;
+                this.btype[this.bco] = 82;
+                this.bxtype[this.bco] = 1;
+                this.bco += 1;
+                //
+                this.ba[this.bco] = 11 * 29 * 100;
+                this.bb[this.bco] = (10 * 29 - 12) * 100;
+                this.btype[this.bco] = 82;
+                this.bxtype[this.bco] = 1;
+                this.bco += 1;
+                //
+                this.ba[this.bco] = 12 * 29 * 100;
+                this.bb[this.bco] = (9 * 29 - 12) * 100;
+                this.btype[this.bco] = 82;
+                this.bxtype[this.bco] = 1;
+                this.bco += 1;
+                //
+                this.ba[this.bco] = 13 * 29 * 100;
+                this.bb[this.bco] = (8 * 29 - 12) * 100;
+                this.btype[this.bco] = 82;
+                this.bxtype[this.bco] = 1;
+                this.bco += 1;
+                //
+                this.ba[this.bco] = 14 * 29 * 100;
+                this.bb[this.bco] = (7 * 29 - 12) * 100;
+                this.btype[this.bco] = 82;
+                this.bxtype[this.bco] = 1;
+                this.bco += 1;
+                //
+                this.ba[this.bco] = 15 * 29 * 100;
+                this.bb[this.bco] = (6 * 29 - 12) * 100;
+                this.btype[this.bco] = 82;
+                this.bxtype[this.bco] = 1;
+                this.bco += 1;
+                //
+                this.ba[this.bco] = 16 * 29 * 100;
+                this.bb[this.bco] = (5 * 29 - 12) * 100;
+                this.btype[this.bco] = 82;
+                this.bxtype[this.bco] = 1;
+                this.bco += 1;
+                //
+                this.ba[this.bco] = 17 * 29 * 100;
+                this.bb[this.bco] = (5 * 29 - 12) * 100;
+                this.btype[this.bco] = 82;
+                this.bxtype[this.bco] = 1;
+                this.bco += 1;
+                //
+                this.ba[this.bco] = 18 * 29 * 100;
+                this.bb[this.bco] = (5 * 29 - 12) * 100;
+                this.btype[this.bco] = 82;
+                this.bxtype[this.bco] = 1;
+                this.bco += 1;
+                //
+                this.ba[this.bco] = 19 * 29 * 100;
+                this.bb[this.bco] = (5 * 29 - 12) * 100;
+                this.btype[this.bco] = 82;
+                this.bxtype[this.bco] = 1;
+                this.bco += 1;
+                //
+                this.ba[this.bco] = 20 * 29 * 100;
+                this.bb[this.bco] = (5 * 29 - 12) * 100;
+                this.btype[this.bco] = 82;
+                this.bxtype[this.bco] = 1;
+                this.bco += 1;
+                //
+                for (this.t = 0; this.t < stagedatex.Length - 1; this.t++)
+                {
+                    for (this.tt = 0; this.tt < stagedatex[this.t].Length - 1; this.tt++)
+                    {
+                        this.stagedate[this.t][this.tt] = 0;
+                        this.stagedate[this.t][this.tt] = stagedatex[this.t][this.tt];
+                    }
+                }
+            }
+            //
 
             if (this.sta == 3 && this.stb == 1 && this.stc == 0)
             { // 3-1
@@ -7903,8 +8374,8 @@
                 //
                 this.sco = 0;
                 this.t = this.sco;
-                // this.sa[this.sco] = 13 * 29 * 100;
-                // this.sb[this.sco] = (13 * 29 - 12) * 100;
+                this.enemyX[this.sco] = 13 * 29 * 100;
+                this.enemyY[this.sco] = (13 * 29 - 12) * 100;
                 this.sc[this.sco] = 9000 - 1;
                 this.sd[this.sco] = 3000;
                 this.stype[this.sco] = 52;
@@ -7912,8 +8383,8 @@
                 this.sco += 1;
                 this.t = this.sco;
                 //
-                // this.sa[this.sco] = 84 * 29 * 100;
-                // this.sb[this.sco] = (13 * 29 - 12) * 100;
+                this.enemyX[this.sco] = 84 * 29 * 100;
+                this.enemyY[this.sco] = (13 * 29 - 12) * 100;
                 this.sc[this.sco] = 9000 - 1;
                 this.sd[this.sco] = 3000;
                 this.stype[this.sco] = 52;
